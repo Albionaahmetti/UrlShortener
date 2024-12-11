@@ -29,9 +29,14 @@ $('#urlForm').submit(function (e) {
 
     var originalUrl = $('#LongUrl').val();
     var expirationTime = $('#Minutes').val();
-
-    if (!originalUrl || expirationTime == 'Add expiration date') {
+    if (!originalUrl && expirationTime == 'Add expiration date') {
         toastr.error('Please enter a URL and select an expiration time.', 'Error');
+        return;
+    } else if (!originalUrl) {
+        toastr.error('Please enter a URL.', 'Error');
+        return;
+    } else if (expirationTime == 'Add expiration date') {
+        toastr.error('Select an expiration time.', 'Error');
         return;
     }
 
@@ -43,14 +48,13 @@ $('#urlForm').submit(function (e) {
             Minutes: expirationTime
         },
         success: function (response) {
-            debugger
+            
             if (response.hasError) {
                 toastr.error(response.errorMessage, 'Error');
 
             }
             else {
                 var shortLink = response.result.shortUrlCode;
-                console.log(shortLink);
                 var listItem = `
                 <li class="d-flex align-items-center">
                     <a href="https://short.link/${shortLink}" class="text-decoration-none">https://short.link/${shortLink}</a>
