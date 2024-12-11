@@ -1,0 +1,28 @@
+﻿@model string
+
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-danger">
+        <div class="card-header bg-danger text-white text-center">
+            <h1 class="display-4"><i class="bi bi-exclamation-triangle-fill"></i> Oops!</h1>
+        </div>
+        <div class="card-body text-center">
+            <h2 class="text-danger">An error occurred while processing your request.</h2>
+            <p class="text-muted">We apologize for the inconvenience. Please try again later.</p>
+
+            @if (!string.IsNullOrEmpty(Model))
+            {
+                <div class="alert alert-warning mt-4" role="alert">
+                    <strong>Error Details:</strong> @Model
+                </div>
+            }
+            <a href="@Url.Action("Index", "URLShortener")" class="btn btn-outline-secondary mt-3">
+                <i class="bi bi-arrow-left"></i> Go Back
+            </a>
+
+        </div>
+    </div>
+</div>

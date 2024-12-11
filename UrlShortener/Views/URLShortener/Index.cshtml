@@ -1,0 +1,66 @@
+﻿@model Response<List<Item>>
+
+@if (Model.HasError)
+{
+    <h1 class="danger">@Model.ErrorMessage</h1>
+    return;
+}
+<div class="row main-container">
+    <div class="col-md-5 col-lg-3 bg-light p-4">
+        <img src="/logo/AnchorzUp Logo_No Tagline.svg" alt="Logo" class="logo mt-4 mb-5">
+        <h6 class="text-uppercase bold">My shortened URLs</h6>
+        <ul id="urlList">
+            @foreach (var url in Model.Result)
+            {
+                <li class="d-flex align-items-center">
+                    <a href="https://short.link/@url.ShortCode" class="text-decoration-none">https://short.link/@url.ShortCode</a>
+                    <form method="post" asp-action="Delete" asp-controller="URLShortener" class="ms-2">
+                        <input type="hidden" name="shortCode" value="@url.ShortCode" />
+                        <button type="submit" class="btn btn-link text-danger ms-2 p-0">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </form>
+                    <button class="btn btn-link text-primary ms-2 p-0" onclick="generateQRCode('https://short.link/@url.ShortCode')">
+                        <i class="bi bi-qr-code"></i>
+                    </button>
+                    <button class="btn btn-link text-success ms-2 p-0" onclick="copyToClipboard('https://short.link/@url.ShortCode')">
+                        <i class="bi bi-clipboard"></i>
+                    </button>
+
+                </li>
+                <p style="font-size: 14px; color: #9bb7f4;">
+                    This link has been clicked @url.ClickCounter times.
+                </p>
+            }
+        </ul>
+    </div>
+
+    <div class="col-md-6 col-lg-9 p-4">
+        <h3 class="mb-5 mt-4">URL Shortener</h3>
+
+        <form id="urlForm">
+            <div class="d-flex align-items-start flex-wrap">
+                <div class="me-2 flex-grow-1">
+                    <input type="url" id="LongUrl" class="form-control" placeholder="Paste the URL to be shortened">
+                </div>
+
+                <div class="me-2">
+                    <select class="form-select" id="Minutes">
+                        <option selected>Add expiration date</option>
+                        <option value="1">1 minute</option>
+                        <option value="5">5 minutes</option>
+                        <option value="30">30 minutes</option>
+                        <option value="60">1 hour</option>
+                        <option value="300">5 hours</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary mt-2" style="background-color: #8E24AA; border-color: #8E24AA;">
+                    Shorten URL
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
