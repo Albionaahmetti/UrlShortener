@@ -43,10 +43,15 @@ $('#urlForm').submit(function (e) {
             Minutes: expirationTime
         },
         success: function (response) {
+            debugger
+            if (response.hasError) {
+                toastr.error(response.errorMessage, 'Error');
 
-            var shortLink = response.result.shortUrlCode;
-            console.log(shortLink);
-            var listItem = `
+            }
+            else {
+                var shortLink = response.result.shortUrlCode;
+                console.log(shortLink);
+                var listItem = `
                 <li class="d-flex align-items-center">
                     <a href="https://short.link/${shortLink}" class="text-decoration-none">https://short.link/${shortLink}</a>
                     <form method="post" asp-action="Delete" asp-controller="URLShortener" class="ms-2">
@@ -67,10 +72,12 @@ $('#urlForm').submit(function (e) {
                 </p>
             `;
 
-            $('#urlList').prepend(listItem);
-            $('#LongUrl').val('');
-            $('#Minutes').val('Add expiration date');
-            toastr.success('The link has been updated successfully! You can now access it using the first link in the sidebar.', 'Update Successful');
+                $('#urlList').prepend(listItem);
+                $('#LongUrl').val('');
+                $('#Minutes').val('Add expiration date');
+                toastr.success('The link has been updated successfully! You can now access it using the first link in the sidebar.', 'Update Successful');
+            }
+      
 
         },
         error: function (xhr, status, error) {
@@ -88,7 +95,7 @@ function deleteLink(shortCode) {
             toastr.success('Shortened URL deleted.', 'Delete Successful');
             setTimeout(() => {
                 location.reload();
-            }, 2000); // Adjusted to reload after 2 seconds
+            }, 2000);
         },
         error: function (xhr, status, error) {
             console.error('Error:', error);

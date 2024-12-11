@@ -49,7 +49,7 @@ namespace UrlShortener.Services
                
                   _context.UrlItems.Add(newUrl);
                  _context.SaveChanges();
-                return new Response<dynamic>(true,new { shortUrlCode });
+                return new Response<dynamic>(false,new { shortUrlCode });
             }
 			catch (Exception)
 			{
