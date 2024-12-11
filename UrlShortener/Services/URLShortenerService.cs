@@ -38,8 +38,14 @@ namespace UrlShortener.Services
                 if (string.IsNullOrEmpty(model.LongUrl) || model.Minutes <= 0)
                     return new Response<dynamic>(true, "Invalid URL or expiration time.");
                   
-                
-                var shortUrlCode = new ShortURLGenerator().Generate();
+                string shortUrlCode = string.Empty;
+                bool exists;
+
+                do
+                {
+                    shortUrlCode = new ShortURLGenerator().Generate();
+                    exists = _context.UrlItems.Any(entity => entity.ShortCode == shortUrlCode);
+                } while (exists);
                 var expirationDate = DateTime.Now.AddMinutes(model.Minutes);
 
                 var newUrl = new UrlItem();
