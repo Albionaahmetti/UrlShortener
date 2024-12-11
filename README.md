@@ -7,7 +7,7 @@ To setup and run the project on your local machine, follow these steps.
 
 1. **Install Required Software:**
 - [.NET SDK 8.0](https://dotnet.microsoft.com/download/dotnet/8.0) (select 32-bit or 64-bit based on your machine).
-- [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads).
+- [SQL Server(Developer Mode)](https://www.microsoft.com/en-us/sql-server/sql-server-downloads).
 - [SQL Server Management Studio (SSMS)](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms).
 - [Visual Studio 2022](https://visualstudio.microsoft.com/downloads/) with the ASP.NET and web development workload.
 
